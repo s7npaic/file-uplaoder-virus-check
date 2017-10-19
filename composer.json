@@ -42,7 +42,6 @@
     "symfony/phpunit-bridge": "~2.7|~3.0"
   },
   "autoload": {
-    "psr-0": { "S7design\\FileUploadVirusValidation": "" }
-  },
-  "target-dir": "S7design\\FileUploadVirusValidation"
+    "psr-4": { "S7design\\FileUploadVirusValidation\\": "" }
+  }
 }
