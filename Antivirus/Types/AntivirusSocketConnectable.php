@@ -6,7 +6,7 @@
  * Time: 3:10 PM
  */
 
-namespace S7design\FileUploadVirusValidation\Types\Types;
+namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types;
 
 
 use Socket\Raw\Socket;

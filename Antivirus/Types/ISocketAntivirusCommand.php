@@ -6,7 +6,7 @@
  * Time: 9:38 AM
  */
 
-namespace S7design\FileUploadVirusValidation\Types\Types;
+namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types;
 
 
 interface ISocketAntivirusCommand

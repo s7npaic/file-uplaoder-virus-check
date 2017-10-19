@@ -9,8 +9,8 @@
 namespace S7design\FileUploadVirusValidation\Antivirus\CommunicationAdapters;
 
 
-use S7design\FileUploadVirusValidation\Types\Types\AntivirusSocketConnectable;
-use S7design\FileUploadVirusValidation\Types\Types\ISocketAntivirusCommand;
+use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\AntivirusSocketConnectable;
+use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\ISocketAntivirusCommand;
 
 class ClamAvAdapter extends AntivirusSocketConnectable implements ISocketAntivirusCommand
 {

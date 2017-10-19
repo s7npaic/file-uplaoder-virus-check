@@ -6,7 +6,7 @@
  * Time: 2:43 PM
  */
 
-namespace S7design\FileUploadVirusValidation\Types\Types;
+namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types;
 
 
 use S7design\FileUploadVirusValidation\Antivirus\IAntivirusProvider;

@@ -9,8 +9,8 @@
 namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv;
 
 
-use S7design\FileUploadVirusValidation\Antivirus\IAntivirusProvider;
-use S7design\FileUploadVirusValidation\Types\Types\ISocketAntivirusCommand;
+use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\IAntivirusProvider;
+use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\ISocketAntivirusCommand;
 
 class ClamAvProvider implements IAntivirusProvider
 {
