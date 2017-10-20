@@ -6,10 +6,8 @@
  * Time: 2:43 PM
  */
 
-namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types;
+namespace S7design\FileUploadVirusValidation\Antivirus\Types;
 
-
-use S7design\FileUploadVirusValidation\Antivirus\IAntivirusProvider;
 
 interface IAntivirusFactory
 {

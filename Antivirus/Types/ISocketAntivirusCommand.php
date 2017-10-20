@@ -6,7 +6,7 @@
  * Time: 9:38 AM
  */
 
-namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types;
+namespace S7design\FileUploadVirusValidation\Antivirus\Types;
 
 
 interface ISocketAntivirusCommand
@@ -29,26 +29,6 @@ interface ISocketAntivirusCommand
      */
     public function scanFile($file) : bool;
     /**
-     * A wrapper to send a command to clamd.
-     *
-     * @param string $command
-     */
-    public function executeCommand($command);
-    /**
-     * A wrapper to cleanly read a response from clamd.
-     *
-     * @return string
-     */
-    public function getResponse();
-    /**
-     * Explicitly close the current socket's connection.
-     *
-     * @return bool
-     *
-     * @throws \SocketConnectionBrokenException If the socket fails to close
-     */
-    public function closeConnection() : bool;
-    /**
      * Parse the received response into a structured array ($filename, $reason, $status).
      *
      * @param string $response
@@ -56,4 +36,9 @@ interface ISocketAntivirusCommand
      * @return bool
      */
     public function parseResponse($response) : bool;
+
+
+    public function connect();
+
+    public function disconnect();
 }

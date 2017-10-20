@@ -9,8 +9,9 @@
 namespace S7design\FileUploadVirusValidation\Antivirus\CommunicationAdapters;
 
 
-use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\AntivirusSocketConnectable;
-use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\ISocketAntivirusCommand;
+
+use S7design\FileUploadVirusValidation\Antivirus\Types\AntivirusSocketConnectable;
+use S7design\FileUploadVirusValidation\Antivirus\Types\ISocketAntivirusCommand;
 
 class ClamAvAdapter extends AntivirusSocketConnectable implements ISocketAntivirusCommand
 {
@@ -27,8 +28,8 @@ class ClamAvAdapter extends AntivirusSocketConnectable implements ISocketAntivir
      */
     public function checkIsServiceAvailable() : bool
     {
-        $this->executeCommand('PING');
-        if ($this->getResponse() === 'PONG') {
+        $this->send('PING');
+        if ($this->read() === 'PONG') {
             return true;
         }
         throw new \SocketConnectionBrokenException('Could not ping clamd');
@@ -42,48 +43,11 @@ class ClamAvAdapter extends AntivirusSocketConnectable implements ISocketAntivir
      */
     public function scanFile($file) : bool
     {
-        $this->executeCommand('SCAN '.$file);
-        $response = $this->getResponse();
+        $this->send('SCAN '.$file);
+        $response = $this->read(4096);
         return $this->parseResponse($response);
     }
-    /**
-     * A wrapper to send a command to clamd.
-     *
-     * @param string $command
-     */
-    public function executeCommand($command)
-    {
-        $this->_socket->send("n$command\n", MSG_DONTROUTE);
-    }
-    /**
-     * A wrapper to cleanly read a response from clamd.
-     *
-     * @return string
-     */
-    public function getResponse()
-    {
-        $result = $this->_socket->read(4096);
-        if (!$this->_inSession) {
-            $this->closeConnection();
-        }
-        return trim($result);
-    }
-    /**
-     * Explicitly close the current socket's connection.
-     *
-     * @return bool
-     *
-     * @throws \SocketConnectionBrokenException If the socket fails to close
-     */
-    public function closeConnection() : bool
-    {
-        try {
-            $this->_socket->close();
-            return true;
-        } catch (\SocketConnectionBrokenException $e) {
-            throw $e;
-        }
-    }
+
     /**
      * Parse the received response into a structured array ($filename, $reason, $status).
      *
@@ -94,21 +58,11 @@ class ClamAvAdapter extends AntivirusSocketConnectable implements ISocketAntivir
     public function parseResponse($response) : bool
     {
         $splitResponse = explode(': ', $response);
-        $idReturn = [];
-        if (!$this->_inSession) {
-            $filename = $splitResponse[0];
-            $message  = $splitResponse[1];
-        } else {
-            $idReturn = ['id' => $splitResponse[0]];
-            $filename = $splitResponse[1];
-            $message  = $splitResponse[2];
-        }
+        $message  = isset($splitResponse[1]) ? $splitResponse[1] : '';
+
         if ($message === self::RESULT_OK) {
             return true;
         } else {
-            $parts  = explode(' ', $message);
-            $status = array_pop($parts);
-            $reason = implode(' ', $parts);
             return false;
         }
     }

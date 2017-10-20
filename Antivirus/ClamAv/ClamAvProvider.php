@@ -9,8 +9,8 @@
 namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv;
 
 
-use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\IAntivirusProvider;
-use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Types\ISocketAntivirusCommand;
+use S7design\FileUploadVirusValidation\Antivirus\Types\IAntivirusProvider;
+use S7design\FileUploadVirusValidation\Antivirus\Types\ISocketAntivirusCommand;
 
 class ClamAvProvider implements IAntivirusProvider
 {
@@ -27,12 +27,15 @@ class ClamAvProvider implements IAntivirusProvider
     public function checkIsSingleFileContaminated(string $absoluteFilePath): bool
     {
         try{
-            $this->command->checkIsServiceAvailable();
+            $this->command->connect();
             $result =  !$this->command->scanFile($absoluteFilePath);
-            $this->command->closeConnection();
+            $this->command->disconnect();
 
             return $result;
         }catch (\SocketConnectionBrokenException $e){
+            return true;
+        }
+        catch (\Exception $e){
             return true;
         }
     }
