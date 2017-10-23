@@ -15,7 +15,7 @@ class FileUploadVirusValidationExtension extends Extension
 
         $loader = new XmlFileLoader(
             $container,
-            new FileLocator(dirname(__DIR__) . '/../Resources/config')
+            new FileLocator(dirname(__DIR__) . '/Resources/config')
             );
 
         $loader->load('services.xml');

@@ -5,11 +5,15 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="s7.viruscheck.clamavprovider" class="S7design\FileUploadVirusValidation\Antivirus\ClamAvFactory" autowire="true" public="true">
+        <service id="s7.viruscheck.clamavprovider" class="S7design\FileUploadVirusValidation\Antivirus\ClamAvFactory" public="true">
             <argument type="service" id="s7.viruscheck.clamav.antivirus"></argument>
         </service>
         <service id="s7.viruscheck.clamav.antivirus" class="S7design\FileUploadVirusValidation\Antivirus\CommunicationAdapters\ClamAvAdapter" public="false">
-            <argument></argument>
+            <argument>%antivirus_check%</argument>
+        </service>
+        <service id="virus.check.constraint.validator" class="S7design\FileUploadVirusValidation\Constraints\VirusCheckConstraintValidator">
+            <tag name="validator.constraint_validator" alias="virus.check.constraint.validator" />
+            <argument type="service" id="s7.viruscheck.clamavprovider"></argument>
         </service>
     </services>
 </container>

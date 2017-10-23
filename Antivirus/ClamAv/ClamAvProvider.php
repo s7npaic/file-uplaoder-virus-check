@@ -9,6 +9,7 @@
 namespace S7design\FileUploadVirusValidation\Antivirus\ClamAv;
 
 
+use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Exceptions\SocketTestException;
 use S7design\FileUploadVirusValidation\Antivirus\Types\IAntivirusProvider;
 use S7design\FileUploadVirusValidation\Antivirus\Types\ISocketAntivirusCommand;
 
@@ -32,10 +33,10 @@ class ClamAvProvider implements IAntivirusProvider
             $this->command->disconnect();
 
             return $result;
-        }catch (\SocketConnectionBrokenException $e){
-            return true;
+        } catch (SocketTestException $exception){
+            return false;
         }
-        catch (\Exception $e){
+        catch (\Exception $exception){
             return true;
         }
     }

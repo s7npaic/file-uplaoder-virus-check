@@ -1,25 +1,35 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nenadpaic
- * Date: 10/18/17
- * Time: 3:10 PM
- */
-
 namespace S7design\FileUploadVirusValidation\Antivirus\Types;
+
+use S7design\FileUploadVirusValidation\Antivirus\ClamAv\Exceptions\SocketTestException;
 
 abstract class AntivirusSocketConnectable
 {
     private $socket;
 
-    public function __construct()
+    private $params;
+
+    public function __construct(array $params)
     {
         $this->socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
+        $this->params = $params;
     }
 
     public function connect()
     {
-        socket_connect($this->socket,'127.0.0.1',3310);
+        if(!isset($this->params['connection']['socket']['url']) || !isset($this->params['connection']['socket']['port'])){
+            throw new \Exception("Please provide configuration for socket connection");
+        }
+
+        if(isset($this->params['testing_mode']) && $this->params['testing_mode'] == true){
+            throw new SocketTestException("Testing mode enabled, connection will not be enabled");
+        }
+
+        socket_connect(
+            $this->socket,
+            $this->params['connection']['socket']['url'],
+            $this->params['connection']['socket']['port']
+        );
     }
 
     protected function send(string $data){

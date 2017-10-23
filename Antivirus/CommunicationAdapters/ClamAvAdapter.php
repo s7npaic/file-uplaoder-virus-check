@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nenadpaic
- * Date: 10/19/17
- * Time: 9:51 AM
- */
 
 namespace S7design\FileUploadVirusValidation\Antivirus\CommunicationAdapters;
 
@@ -22,7 +16,7 @@ class ClamAvAdapter extends AntivirusSocketConnectable implements ISocketAntivir
     /**
      * Ping clamd to see if we get a response.
      *
-     * @throws \SocketConnectionBrokenException
+     * @throws \Exception
      *
      * @return bool
      */
@@ -32,7 +26,7 @@ class ClamAvAdapter extends AntivirusSocketConnectable implements ISocketAntivir
         if ($this->read() === 'PONG') {
             return true;
         }
-        throw new \SocketConnectionBrokenException('Could not ping clamd');
+        throw new \Exception('Could not ping clamd');
     }
     /**
      * Scan a single file.
