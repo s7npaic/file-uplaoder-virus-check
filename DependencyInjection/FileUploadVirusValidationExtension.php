@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nenadpaic
- * Date: 10/18/17
- * Time: 5:18 PM
- */
 
-namespace S7design\FileUploadVirusValidation;
-
+namespace S7design\FileUploadVirusValidation\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,9 +12,10 @@ class FileUploadVirusValidationExtension extends Extension
 
     public function load(array $configs, ContainerBuilder $container)
     {
+
         $loader = new XmlFileLoader(
             $container,
-            new FileLocator(dirname(__DIR__) . '/Resources/config')
+            new FileLocator(dirname(__DIR__) . '../Resources/config')
             );
 
         $loader->load('services.xml');

@@ -9,6 +9,7 @@
 namespace S7design\FileUploadVirusValidation;
 
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class FileUploadVirusValidationBundle extends Bundle
@@ -18,5 +19,4 @@ class FileUploadVirusValidationBundle extends Bundle
     {
         return parent::getContainerExtension();
     }
-
 }

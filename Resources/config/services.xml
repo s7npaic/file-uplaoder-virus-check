@@ -5,9 +5,11 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="s7.viruscheck.clamavprovider" class="S7design\FileUploadVirusValidation\Antivirus\ClamAvFactory">
-            <argument></argument> <!-- will be filled in with client_id dynamically -->
-            <argument></argument> <!-- will be filled in with client_secret dynamically -->
+        <service id="s7.viruscheck.clamavprovider" class="S7design\FileUploadVirusValidation\Antivirus\ClamAvFactory" autowire="true" public="true">
+            <argument type="service" id="s7.viruscheck.clamav.antivirus"></argument>
+        </service>
+        <service id="s7.viruscheck.clamav.antivirus" class="S7design\FileUploadVirusValidation\Antivirus\CommunicationAdapters\ClamAvAdapter" public="false">
+            <argument></argument>
         </service>
     </services>
 </container>
