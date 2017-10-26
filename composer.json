@@ -3,7 +3,6 @@
   "description": "Makes virus check validation for uploaded files",
   "keywords": ["validation", "virus", "protection"],
   "type": "symfony-bundle",
-  "version" : "1.0.1",
   "license": "MIT",
   "authors": [
     {
